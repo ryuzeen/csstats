@@ -68,7 +68,7 @@
         }
 
         @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
+            to { opacity: 1; transform: translateY(0); }w
         }
 
         .delay-1 { animation-delay: 0.1s; }
@@ -93,7 +93,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 fade-in-up">
             
             <!-- Perfil (Esquerda) -->
-            <div class="lg:col-span-4 glass-card p-6 rounded-none border-l-2 border-l-white/20 flex flex-col items-center text-center relative overflow-hidden group">
+            <!-- Correção: removida classe border-l-2 para uniformizar a borda -->
+            <div class="lg:col-span-4 glass-card p-6 flex flex-col items-center text-center relative overflow-hidden group">
                 <!-- Efeito Hover no card -->
                 <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
 
@@ -102,7 +103,6 @@
                     <img src="https://avatars.akamai.steamstatic.com/d420d18f530c3ceeb2f09b3e035485ff3aa625f4_full.jpg" 
                          alt="Profile" 
                          class="w-full h-full object-cover border-4 border-white/5 rounded-2xl hover:border-white/20 transition-all duration-500 grayscale hover:grayscale-0">
-                    <!-- Ícone de Online removido -->
                 </div>
 
                 <h1 class="text-4xl font-black text-white tracking-tighter mb-1">--ryu</h1>
@@ -119,13 +119,12 @@
             </div>
 
             <!-- Stats Detalhados (Direita) -->
-            <div class="lg:col-span-8 glass-card p-8 rounded-none flex flex-col justify-center relative">
-                <div class="absolute top-0 right-0 p-4 opacity-20">
-                    <i data-lucide="bar-chart-2" class="w-24 h-24 text-white"></i>
-                </div>
+            <div class="lg:col-span-8 glass-card p-8 flex flex-col justify-center relative">
                 
-                <h2 class="text-sm text-neutral-400 font-bold mb-6 flex items-center gap-2">
-                    <span class="w-2 h-2 bg-green-500"></span> PERFORMANCE RATING
+                <!-- Ajuste: Ícone branco, maior (w-6 h-6) e gap ajustado -->
+                <h2 class="text-sm text-neutral-400 font-bold mb-6 flex items-center gap-3">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/combo-chart.png" class="w-6 h-6 opacity-90" alt="Icon">
+                    PERFORMANCE RATING
                 </h2>
 
                 <div class="space-y-5">
@@ -195,7 +194,7 @@
                     <span class="text-[10px] text-neutral-500 mt-1 uppercase">Region Rank #18</span>
                 </div>
                 <div class="relative">
-                    <img src="https://static.wikia.nocookie.net/logopedia/images/4/49/Counter-Strike_2_%28Icon%29.png/revision/latest?cb=20230330015359" alt="Premier" class="w-20 h-auto object-contain drop-shadow-[0_0_15px_rgba(251,191,36,0.2)]">
+                    <img src="https://cdn2.steamgriddb.com/icon/fe772ff1261b820e437821342b445539/32/256x256.png" alt="Premier" class="w-20 h-auto object-contain drop-shadow-[0_0_15px_rgba(251,191,36,0.2)]">
                 </div>
             </div>
 
@@ -296,8 +295,8 @@
 
     </div>
 
-    <!-- Toast de Cópia -->
-    <div id="toast" class="fixed top-5 right-5 bg-green-500 text-black px-4 py-3 shadow-[0_0_20px_rgba(34,197,94,0.4)] transform translate-x-full transition-transform duration-300 text-xs font-bold flex items-center gap-2 z-50">
+    <!-- Toast de Cópia - MOVIDO PARA FORA DO GRID PRINCIPAL PARA CORRIGIR POSIÇÃO FIXA -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-green-500 text-black px-6 py-3 shadow-[0_0_20px_rgba(34,197,94,0.4)] transform translate-y-24 opacity-0 transition-all duration-300 text-xs font-bold flex items-center gap-2 z-50 pointer-events-none rounded">
         <i data-lucide="check-circle-2" class="w-4 h-4"></i>
         CONFIG COPIADA
     </div>
@@ -315,9 +314,11 @@
             document.body.removeChild(el);
 
             const toast = document.getElementById('toast');
-            toast.classList.remove('translate-x-full');
+            // Toast aparece vindo de baixo
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            
             setTimeout(() => {
-                toast.classList.add('translate-x-full');
+                toast.classList.add('translate-y-24', 'opacity-0');
             }, 2000);
         }
 

@@ -23,9 +23,19 @@
             background-color: var(--bg-dark);
             color: #d4d4d4;
             font-family: 'JetBrains Mono', monospace;
-            /* Alterado: h-screen e overflow-hidden para travar a tela */
-            height: 100vh;
-            overflow: hidden; 
+            
+            /* Mobile: Permite scroll e altura mínima para cobrir tudo */
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Desktop (lg): Trava a tela e remove scroll apenas se a tela for grande */
+        @media (min-width: 1024px) {
+            body {
+                height: 100vh;
+                overflow: hidden;
+            }
         }
 
         /* Utilitários Customizados */
@@ -85,12 +95,18 @@
         }
     </style>
 </head>
-<body class="flex items-center justify-center p-4 lg:p-6">
+<!-- 
+    Ajuste de Classes do Body:
+    - flex flex-col: Garante fluxo vertical.
+    - justify-center (removido do mobile): No mobile o conteúdo flui do topo.
+    - lg:justify-center: No Desktop ele centraliza verticalmente.
+    - lg:items-center: No Desktop centraliza horizontalmente.
+-->
+<body class="flex flex-col lg:justify-center lg:items-center p-4 lg:p-6">
 
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Ajuste: space-y reduzido de 6 para 4 para compactar a altura -->
-    <div class="w-full max-w-6xl space-y-4">
+    <div class="w-full max-w-6xl space-y-4 my-auto lg:my-0">
 
         <!-- BLOCO SUPERIOR: PERFIL + LEETIFY STATS -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 fade-in-up">
@@ -121,7 +137,6 @@
             </div>
 
             <!-- Stats Detalhados (Direita) -->
-            <!-- Ajuste: Padding reduzido de 8 para 6 -->
             <div class="lg:col-span-8 glass-card p-6 flex flex-col justify-center relative">
                 
                 <h2 class="text-xs text-neutral-400 font-bold mb-5 flex items-center gap-3">
@@ -188,7 +203,6 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             
             <!-- Premier -->
-            <!-- Ajuste: Altura reduzida de h-40 para h-36 -->
             <div class="glass-card fade-in-up delay-1 relative h-36 flex items-center justify-between px-6 hover:border-yellow-500/30 transition-colors group">
                 <div class="flex flex-col">
                     <span class="text-yellow-500 font-bold text-[10px] tracking-widest mb-1">PREMIER</span>
@@ -227,7 +241,6 @@
         </div>
 
         <!-- BLOCO INFERIOR: SETUP -->
-        <!-- Ajuste: Padding reduzido para p-5 -->
         <div class="glass-card p-5 fade-in-up delay-3">
             <h3 class="text-[10px] font-bold text-white bg-white/5 inline-block px-2 py-1 mb-4 border border-white/5">
                 HARDWARE & CONFIG
@@ -290,7 +303,7 @@
             </div>
         </div>
 
-        <footer class="text-center pt-2 opacity-30">
+        <footer class="text-center pt-2 opacity-30 pb-4 lg:pb-0">
             <p class="text-[9px] tracking-widest">PRONET SYSTEMS // RYU_CFG_LOADED</p>
         </footer>
 

@@ -39,11 +39,51 @@
             }
         }
 
+        /* BACKGROUND EFFECTS */
+        
+        /* 1. Malha Cibernética (Grid) */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            /* Máscara para suavizar as bordas (Vignette) */
+            mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+            pointer-events: none;
+        }
+
+        /* 2. Brilho Ambiental Pulsante */
+        .ambient-glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120vw;
+            height: 120vh;
+            z-index: -3;
+            background: radial-gradient(circle at center, rgba(76, 29, 149, 0.08) 0%, rgba(5, 5, 5, 0) 60%);
+            animation: pulseGlow 10s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
         /* Utilitários Customizados */
         .glass-card {
             background: var(--card-bg);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Sombra sutil extra */
         }
 
         .stat-bar-bg {
@@ -99,34 +139,66 @@
 </head>
 <body class="flex flex-col lg:justify-center lg:items-center p-4 lg:p-6">
 
-    <canvas id="bg-canvas"></canvas>
+    <!-- EFEITOS DE FUNDO -->
+    <div class="ambient-glow"></div> <!-- Brilho Roxo -->
+    <div class="bg-grid"></div>      <!-- Malha Cibernética -->
+    <canvas id="bg-canvas"></canvas> <!-- Partículas (Original) -->
 
-    <div class="w-full max-w-[90rem] space-y-4 my-auto lg:my-0">
+    <div class="w-full max-w-[90rem] space-y-4 my-auto lg:my-0 relative z-10">
 
         <!-- BLOCO SUPERIOR: PERFIL + LEETIFY STATS -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 fade-in-up">
             
             <!-- Perfil (Esquerda) -->
-            <div class="lg:col-span-4 glass-card p-5 flex flex-col items-center text-center relative overflow-hidden group justify-center">
+            <div class="lg:col-span-4 glass-card p-5 flex flex-col items-center text-center relative overflow-hidden group justify-between">
                 <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
 
-                <div class="relative w-32 h-32 mb-3 shadow-2xl">
-                    <img src="https://avatars.akamai.steamstatic.com/d420d18f530c3ceeb2f09b3e035485ff3aa625f4_full.jpg" 
+                <!-- Container do Avatar com Borda Animada -->
+                <!-- w-32 (128px) para a imagem, container ajustado -->
+                <div class="relative w-32 h-32 mb-4 mt-2">
+                    <!-- Foto de Perfil (Nova URL) -->
+                    <!-- Borda removida da tag img pois a borda da steam já faz o papel de moldura -->
+                    <img src="https://avatars.akamai.steamstatic.com/ab24462c6cdd37aba775cc4f1a784d5f6aadfb5a_full.jpg" 
                          alt="Profile" 
-                         class="w-full h-full object-cover border-4 border-white/5 rounded-2xl hover:border-white/20 transition-all duration-500 grayscale hover:grayscale-0">
+                         class="w-full h-full object-cover rounded-md grayscale hover:grayscale-0 transition-all duration-500">
+                    
+                    <!-- Borda Animada Steam (Posicionada absolutamente sobre a foto) -->
+                    <!-- Escala ajustada (scale-125) para ficar maior que a foto, como na Steam -->
+                    <img src="https://shared.akamai.steamstatic.com/community_assets/images/items/2455340/1eca18cab6324daefddb437f95bd1b648a492f52.png" 
+                         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 max-w-none pointer-events-none z-10"
+                         alt="Steam Border">
                 </div>
 
-                <h1 class="text-3xl font-black text-white tracking-tighter mb-1">--ryu</h1>
-                <div class="flex items-center gap-2 text-[10px] text-neutral-500 font-bold tracking-widest uppercase mb-4">
-                    <span>Brasil</span>
-                    <span>•</span>
-                    <span>Entry Fragger</span>
-                </div>
+                <div class="w-full">
+                    <h1 class="text-3xl font-black text-white tracking-tighter mb-1">--ryu</h1>
+                    <div class="flex items-center justify-center gap-2 text-[10px] text-neutral-500 font-bold tracking-widest uppercase mb-4">
+                        <span>Brasil</span>
+                        <span>•</span>
+                        <span>Entry Fragger</span>
+                    </div>
 
-                <a href="https://steamcommunity.com/id/imryuzeen/" target="_blank" class="w-full py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white text-[10px] font-bold tracking-wider transition-all flex items-center justify-center gap-2 group">
-                    <i data-lucide="steam" class="w-3 h-3 group-hover:text-blue-400 transition-colors"></i>
-                    VISITAR STEAM
-                </a>
+                    <a href="https://steamcommunity.com/id/imryuzeen/" target="_blank" class="w-full py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white text-[10px] font-bold tracking-wider transition-all flex items-center justify-center gap-2 group mb-4">
+                        <i data-lucide="steam" class="w-3 h-3 group-hover:text-blue-400 transition-colors"></i>
+                        VISITAR STEAM
+                    </a>
+
+                    <!-- SEÇÃO DE INVENTÁRIO (NOVA) -->
+                    <div class="w-full h-[1px] bg-white/5 my-3"></div>
+                    
+                    <div class="flex items-center justify-between bg-black/20 p-2 rounded border border-white/5">
+                        <div class="text-left">
+                            <span class="block text-[9px] text-neutral-500 font-bold tracking-widest">INVENTORY</span>
+                            <span class="block text-sm font-black text-green-400">$3.522,60</span>
+                        </div>
+                        <div class="w-12 h-10 flex items-center justify-center relative group-item">
+                            <!-- Brilho atrás do item -->
+                            <div class="absolute inset-0 bg-purple-500/20 blur-md rounded-full"></div>
+                            <img src="https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Z-ua6bbZrLOmsD3avzud6teVWQiy3nAgq_TvWmNiseXyfbQ4pCcElF7ZbsRe6kIXmN7ixsQfYiIpHm337inlB6il1o7FVbEGRqH0/96fx96f" 
+                                 class="w-full h-full object-contain relative z-10 drop-shadow-md transform hover:scale-125 transition-transform" 
+                                 alt="Featured Item">
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Stats Detalhados (Direita) -->
@@ -192,7 +264,7 @@
             </div>
         </div>
 
-        <!-- BLOCO DO MEIO: RANKS (Atualizado para 4 colunas) -->
+        <!-- BLOCO DO MEIO: RANKS -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             
             <!-- Premier -->
@@ -219,38 +291,32 @@
                 </div>
             </div>
 
-            <!-- Gamers Club (Novo) -->
+            <!-- Gamers Club -->
             <div class="glass-card fade-in-up delay-3 relative h-36 flex items-center justify-between px-5 hover:border-blue-500/30 transition-colors group">
                 <div class="flex flex-col">
                     <span class="text-blue-500 font-bold text-[10px] tracking-widest mb-1">GAMERS CLUB</span>
                     <span class="text-2xl lg:text-3xl font-black text-white tracking-tighter drop-shadow-[0_0_8px_rgba(59,130,246,0.3)]">LVL 21</span>
                     <span class="text-[9px] text-neutral-500 mt-1 group-hover:text-blue-400 transition-colors">SA #67</span>
                 </div>
-                <!-- Tamanho reduzido de w-14 h-14 para w-12 h-12 -->
                 <div class="relative w-12 h-12">
-                    <!-- Ícone Customizado: Octógono Rotacionado (Ponta pra cima) -->
                     <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_0_10px_rgba(255,255,255,0.15)]">
                         <defs>
-                            <!-- Degradê Complexo conforme descrição -->
                             <linearGradient id="gc-complex" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#ff0000" />   <!-- Começa Vermelho (Esq/Cima) -->
-                                <stop offset="15%" stop-color="#800080" />  <!-- Roxo (Dir) -->
-                                <stop offset="30%" stop-color="#ff0000" />  <!-- Vermelho (Desce) -->
-                                <stop offset="45%" stop-color="#ffff00" />  <!-- Amarelo -->
-                                <stop offset="60%" stop-color="#00ff00" />  <!-- Verde -->
-                                <stop offset="75%" stop-color="#0000ff" />  <!-- Azul -->
-                                <stop offset="90%" stop-color="#ffff00" />  <!-- Amarelo -->
-                                <stop offset="100%" stop-color="#ff0000" /> <!-- Encontra Vermelho -->
+                                <stop offset="0%" stop-color="#ff0000" />
+                                <stop offset="15%" stop-color="#800080" />
+                                <stop offset="30%" stop-color="#ff0000" />
+                                <stop offset="45%" stop-color="#ffff00" />
+                                <stop offset="60%" stop-color="#00ff00" />
+                                <stop offset="75%" stop-color="#0000ff" />
+                                <stop offset="90%" stop-color="#ffff00" />
+                                <stop offset="100%" stop-color="#ff0000" />
                             </linearGradient>
                         </defs>
-                        <!-- Forma Octogonal com Ponta no Topo e Fundo #3d333c (Darker) -->
                         <path d="M50 2 L84 16 L98 50 L84 84 L50 98 L16 84 L2 50 L16 16 Z" 
                               fill="#3d333c" 
                               stroke="url(#gc-complex)" 
                               stroke-width="8" 
                               stroke-linejoin="round"/>
-                        
-                        <!-- Texto 21 no meio -->
                         <text x="50" y="65" 
                               font-family="'JetBrains Mono', monospace" 
                               font-size="40" 
@@ -364,9 +430,7 @@
             document.body.removeChild(el);
 
             const toast = document.getElementById('toast');
-            // Toast aparece vindo de baixo
             toast.classList.remove('translate-y-24', 'opacity-0');
-            
             setTimeout(() => {
                 toast.classList.add('translate-y-24', 'opacity-0');
             }, 2000);

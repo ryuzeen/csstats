@@ -15,6 +15,7 @@
             --border-color: rgba(255, 255, 255, 0.08);
             --accent-premier: #fbbf24; /* Amarelo/Dourado */
             --accent-faceit: #ef4444; /* Vermelho */
+            --accent-gc: #3b82f6; /* Azul GC */
             --accent-aim: #22c55e;
             --accent-util: #3b82f6;
         }
@@ -86,6 +87,7 @@
         .delay-1 { animation-delay: 0.1s; }
         .delay-2 { animation-delay: 0.2s; }
         .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
 
         #bg-canvas {
             position: fixed;
@@ -95,28 +97,19 @@
         }
     </style>
 </head>
-<!-- 
-    Ajuste de Classes do Body:
-    - flex flex-col: Garante fluxo vertical.
-    - justify-center (removido do mobile): No mobile o conteúdo flui do topo.
-    - lg:justify-center: No Desktop ele centraliza verticalmente.
-    - lg:items-center: No Desktop centraliza horizontalmente.
--->
 <body class="flex flex-col lg:justify-center lg:items-center p-4 lg:p-6">
 
     <canvas id="bg-canvas"></canvas>
 
-    <div class="w-full max-w-6xl space-y-4 my-auto lg:my-0">
+    <div class="w-full max-w-[90rem] space-y-4 my-auto lg:my-0">
 
         <!-- BLOCO SUPERIOR: PERFIL + LEETIFY STATS -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 fade-in-up">
             
             <!-- Perfil (Esquerda) -->
             <div class="lg:col-span-4 glass-card p-5 flex flex-col items-center text-center relative overflow-hidden group justify-center">
-                <!-- Efeito Hover no card -->
                 <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
 
-                <!-- Foto Quadrada com Borda -->
                 <div class="relative w-32 h-32 mb-3 shadow-2xl">
                     <img src="https://avatars.akamai.steamstatic.com/d420d18f530c3ceeb2f09b3e035485ff3aa625f4_full.jpg" 
                          alt="Profile" 
@@ -199,49 +192,92 @@
             </div>
         </div>
 
-        <!-- BLOCO DO MEIO: RANKS -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- BLOCO DO MEIO: RANKS (Atualizado para 4 colunas) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             
             <!-- Premier -->
-            <div class="glass-card fade-in-up delay-1 relative h-36 flex items-center justify-between px-6 hover:border-yellow-500/30 transition-colors group">
+            <div class="glass-card fade-in-up delay-1 relative h-36 flex items-center justify-between px-5 hover:border-yellow-500/30 transition-colors group">
                 <div class="flex flex-col">
                     <span class="text-yellow-500 font-bold text-[10px] tracking-widest mb-1">PREMIER</span>
-                    <span class="text-3xl font-black text-amber-400 tracking-tighter drop-shadow-[0_0_8px_rgba(251,191,36,0.3)]">30.103</span>
+                    <span class="text-2xl lg:text-3xl font-black text-amber-400 tracking-tighter drop-shadow-[0_0_8px_rgba(251,191,36,0.3)]">30.103</span>
                     <span class="text-[9px] text-neutral-500 mt-1 uppercase">Region Rank #18</span>
                 </div>
                 <div class="relative">
-                    <img src="https://cdn2.steamgriddb.com/icon/fe772ff1261b820e437821342b445539/32/256x256.png" alt="Premier" class="w-16 h-auto object-contain drop-shadow-[0_0_15px_rgba(251,191,36,0.2)]">
+                    <img src="https://cdn2.steamgriddb.com/icon/fe772ff1261b820e437821342b445539/32/256x256.png" alt="Premier" class="w-14 h-auto object-contain drop-shadow-[0_0_15px_rgba(251,191,36,0.2)]">
                 </div>
             </div>
 
             <!-- Faceit -->
-            <div class="glass-card fade-in-up delay-2 relative h-36 flex items-center justify-between px-6 hover:border-red-500/30 transition-colors group">
+            <div class="glass-card fade-in-up delay-2 relative h-36 flex items-center justify-between px-5 hover:border-red-500/30 transition-colors group">
                 <div class="flex flex-col">
                     <span class="text-red-500 font-bold text-[10px] tracking-widest mb-1">FACEIT</span>
-                    <span class="text-3xl font-black text-red-500 tracking-tighter drop-shadow-[0_0_8px_rgba(239,68,68,0.3)]">3.356</span>
-                    <span class="text-[9px] text-neutral-500 mt-1 group-hover:text-red-400 transition-colors">SOUTH AMERICA #45</span>
+                    <span class="text-2xl lg:text-3xl font-black text-red-500 tracking-tighter drop-shadow-[0_0_8px_rgba(239,68,68,0.3)]">3.356</span>
+                    <span class="text-[9px] text-neutral-500 mt-1 group-hover:text-red-400 transition-colors">SA #45</span>
                 </div>
                 <div class="relative">
-                    <img src="https://leetify.com/assets/images/rank-icons/faceit10.svg" alt="Faceit Lvl 10" class="w-16 h-16 object-contain drop-shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+                    <img src="https://leetify.com/assets/images/rank-icons/faceit10.svg" alt="Faceit Lvl 10" class="w-14 h-14 object-contain drop-shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+                </div>
+            </div>
+
+            <!-- Gamers Club (Novo) -->
+            <div class="glass-card fade-in-up delay-3 relative h-36 flex items-center justify-between px-5 hover:border-blue-500/30 transition-colors group">
+                <div class="flex flex-col">
+                    <span class="text-blue-500 font-bold text-[10px] tracking-widest mb-1">GAMERS CLUB</span>
+                    <span class="text-2xl lg:text-3xl font-black text-white tracking-tighter drop-shadow-[0_0_8px_rgba(59,130,246,0.3)]">LVL 21</span>
+                    <span class="text-[9px] text-neutral-500 mt-1 group-hover:text-blue-400 transition-colors">SA #67</span>
+                </div>
+                <!-- Tamanho reduzido de w-14 h-14 para w-12 h-12 -->
+                <div class="relative w-12 h-12">
+                    <!-- Ícone Customizado: Octógono Rotacionado (Ponta pra cima) -->
+                    <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_0_10px_rgba(255,255,255,0.15)]">
+                        <defs>
+                            <!-- Degradê Complexo conforme descrição -->
+                            <linearGradient id="gc-complex" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff0000" />   <!-- Começa Vermelho (Esq/Cima) -->
+                                <stop offset="15%" stop-color="#800080" />  <!-- Roxo (Dir) -->
+                                <stop offset="30%" stop-color="#ff0000" />  <!-- Vermelho (Desce) -->
+                                <stop offset="45%" stop-color="#ffff00" />  <!-- Amarelo -->
+                                <stop offset="60%" stop-color="#00ff00" />  <!-- Verde -->
+                                <stop offset="75%" stop-color="#0000ff" />  <!-- Azul -->
+                                <stop offset="90%" stop-color="#ffff00" />  <!-- Amarelo -->
+                                <stop offset="100%" stop-color="#ff0000" /> <!-- Encontra Vermelho -->
+                            </linearGradient>
+                        </defs>
+                        <!-- Forma Octogonal com Ponta no Topo e Fundo #3d333c (Darker) -->
+                        <path d="M50 2 L84 16 L98 50 L84 84 L50 98 L16 84 L2 50 L16 16 Z" 
+                              fill="#3d333c" 
+                              stroke="url(#gc-complex)" 
+                              stroke-width="8" 
+                              stroke-linejoin="round"/>
+                        
+                        <!-- Texto 21 no meio -->
+                        <text x="50" y="65" 
+                              font-family="'JetBrains Mono', monospace" 
+                              font-size="40" 
+                              font-weight="800" 
+                              fill="white" 
+                              text-anchor="middle"
+                              style="text-shadow: 0px 2px 4px rgba(0,0,0,0.5);">21</text>
+                    </svg>
                 </div>
             </div>
 
             <!-- MM -->
-            <div class="glass-card fade-in-up delay-3 relative h-36 flex items-center justify-between px-6 hover:border-yellow-500/30 transition-colors group">
+            <div class="glass-card fade-in-up delay-4 relative h-36 flex items-center justify-between px-5 hover:border-yellow-500/30 transition-colors group">
                 <div class="flex flex-col">
                     <span class="text-yellow-500 font-bold text-[10px] tracking-widest mb-1">MATCHMAKING</span>
-                    <span class="text-xl font-black text-white tracking-tight">GLOBAL</span>
+                    <span class="text-xl lg:text-2xl font-black text-white tracking-tight">GLOBAL</span>
                     <span class="text-[9px] text-neutral-500 mt-1">THE ELITE</span>
                 </div>
                 <div class="relative">
-                    <img src="https://leetify.com/assets/images/rank-icons/matchmaking18.png" alt="Global" class="w-20 h-auto object-contain drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]">
+                    <img src="https://leetify.com/assets/images/rank-icons/matchmaking18.png" alt="Global" class="w-16 h-auto object-contain drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]">
                 </div>
             </div>
 
         </div>
 
         <!-- BLOCO INFERIOR: SETUP -->
-        <div class="glass-card p-5 fade-in-up delay-3">
+        <div class="glass-card p-5 fade-in-up delay-4">
             <h3 class="text-[10px] font-bold text-white bg-white/5 inline-block px-2 py-1 mb-4 border border-white/5">
                 HARDWARE & CONFIG
             </h3>

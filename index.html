@@ -158,9 +158,14 @@
                 <!-- Container do Avatar com Borda Animada -->
                 <!-- w-32 (128px) para a imagem, container ajustado -->
                 <div class="relative w-32 h-32 mb-4 mt-2">
-                    <!-- Foto de Perfil (Nova URL) -->
-                    <!-- Borda removida da tag img pois a borda da steam já faz o papel de moldura -->
-                    <img id="steam-avatar" src="https://avatars.akamai.steamstatic.com/b2198e625a5dd3d5f7e43ab8095f42896835833c_full.jpg" 
+                    
+                    <!-- 
+                        Foto de Perfil puxada dinamicamente via DecAPI
+                        O "onerror" garante que se a API cair, a sua foto de backup carrega automaticamente!
+                    -->
+                    <img id="steam-avatar" 
+                         src="https://decapi.me/steam/avatar/imryuzeen" 
+                         onerror="this.src='https://avatars.akamai.steamstatic.com/ab24462c6cdd37aba775cc4f1a784d5f6aadfb5a_full.jpg'"
                          alt="Profile" 
                          class="w-full h-full object-cover rounded-md grayscale hover:grayscale-0 transition-all duration-500">
                     
@@ -475,23 +480,6 @@
                 toast.classList.add('translate-y-24', 'opacity-0');
             }, 2000);
         }
-
-        // Função para buscar a foto de perfil atualizada da Steam
-        async function fetchSteamAvatar() {
-            try {
-                // Usa uma API pública (DecAPI) que contorna o bloqueio de CORS da Steam
-                const response = await fetch('https://decapi.me/steam/avatar/imryuzeen');
-                if (response.ok) {
-                    const avatarUrl = await response.text();
-                    document.getElementById('steam-avatar').src = avatarUrl;
-                }
-            } catch (error) {
-                console.error('Erro ao buscar o avatar da Steam:', error);
-            }
-        }
-
-        // Chama a função logo após carregar a página
-        fetchSteamAvatar();
 
         // Partículas Sutis (Background)
         const canvas = document.getElementById('bg-canvas');
